@@ -80,44 +80,44 @@ export DTCRED=$(curl -s -k -X POST https://$TOWER_URL/api/v2/credentials/ --user
 }' | jq -r '.id')
 #echo "DTCRED: " $DTCRED
 
-#echo -e "Creating Git Credential for '$GITHUB_USER_NAME'..."
-#export GITCRED=$(curl -s -k -X POST https://$TOWER_URL/api/v1/credentials/ --user admin:dynatrace -H "Content-Type: application/json" \
-#--data '{
-#  "name": "'$GITHUB_USER_NAME' git credential",
-#  "kind": "scm",
-#  "user": 1,
-#  "username": "'$GITHUB_USER_NAME'",
-#  "password": "'$GITHUB_PERSONAL_ACCESS_TOKEN'"
-#}' | jq -r '.id')
-##echo "GITCRED: " $GITCRED
+echo -e "Creating Git Credential for '$GITHUB_USER_NAME'..."
+export GITCRED=$(curl -s -k -X POST https://$TOWER_URL/api/v1/credentials/ --user admin:dynatrace -H "Content-Type: application/json" \
+--data '{
+  "name": "'$GITHUB_USER_NAME' git credential",
+  "kind": "scm",
+  "user": 1,
+  "username": "'$GITHUB_USER_NAME'",
+  "password": "'$GITHUB_PERSONAL_ACCESS_TOKEN'"
+}' | jq -r '.id')
+#echo "GITCRED: " $GITCRED
 
-#echo -e "Creating Project..."
-#export PROJECT_ID=$(curl -s -k -X POST https://$TOWER_URL/api/v1/projects/ --user admin:dynatrace -H "Content-Type: application/json" \
-#--data '{
-#  "name": "self-healing",
-#  "scm_type": "git",
-#  "scm_url": "https://github.com/'$DOCS_ORG'/'$DOCS_REPO'",
-#  "scm_branch": "'$DOCS_BRANCH'",
-#  "credential": '$GITCRED',
-#  "scm_clean": "true"
-#}' | jq -r '.id')
-#echo "PROJECT_ID: " $PROJECT_ID
+echo -e "Creating Project..."
+export PROJECT_ID=$(curl -s -k -X POST https://$TOWER_URL/api/v1/projects/ --user admin:dynatrace -H "Content-Type: application/json" \
+--data '{
+  "name": "self-healing",
+  "scm_type": "git",
+  "scm_url": "https://github.com/'$DOCS_ORG'/'$DOCS_REPO'",
+  "scm_branch": "'$DOCS_BRANCH'",
+  "credential": '$GITCRED',
+  "scm_clean": "true"
+}' | jq -r '.id')
+echo "PROJECT_ID: " $PROJECT_ID
 
-#echo -e "${YLW}\nWaiting for project to initialize${NC}"
+echo -e "${YLW}\nWaiting for project to initialize${NC}"
 
-#while [[ $(curl --max-time 5 -s -k -L -X GET https://$TOWER_URL/api/v1/projects/$PROJECT_ID --user admin:dynatrace | jq .status -r) != "successful" ]]; do echo "waiting for project..." && sleep 7; done
+while [[ $(curl --max-time 5 -s -k -L -X GET https://$TOWER_URL/api/v1/projects/$PROJECT_ID --user admin:dynatrace | jq .status -r) != "successful" ]]; do echo "waiting for project..." && sleep 7; done
 
 echo -e "${YLW}\nProject URL: https://$TOWER_URL/api/v1/projects/$PROJECT_ID${NC}"
 
 echo -e "\nCreating Inventory for common variables..."
-export INVENTORY_ID=$(curl -v -s -k -X POST https://$TOWER_URL/api/v1/inventories/ --user admin:dynatrace -H "Content-Type: application/json" \
+export INVENTORY_ID=$(curl -s -k -X POST https://$TOWER_URL/api/v1/inventories/ --user admin:dynatrace -H "Content-Type: application/json" \
 --data '{
   "name": "inventory",
   "type": "inventory",
   "organization": 1,
   "variables": "---\ntenant: \"'$DT_TENANT'\"\ncarts_promotion_url: \"http://'$CART_URL'/carts/1/items/promotion\"\ncommentuser: \"Ansible Playbook\"\ntower_user: \"admin\"\ntower_password: \"dynatrace\"\ndtcommentapiurl: \"https://{{tenant}}/api/v1/problem/details/{{pid}}/comments?Api-Token={{DYNATRACE_API_TOKEN}}\"\ndteventapiurl: \"https://{{tenant}}/api/v1/events/?Api-Token={{DYNATRACE_API_TOKEN}}\""
 }' | jq -r '.id')
-#echo "INVENTORY_ID: " $INVENTORY_ID
+echo "INVENTORY_ID: " $INVENTORY_ID
 
 echo -e "Creating Job Template for remediation action..."
 export REMEDIATION_TEMPLATE_ID=$(curl -s -k -X POST https://$TOWER_URL/api/v1/job_templates/ --user admin:dynatrace -H "Content-Type: application/json" \
@@ -142,7 +142,7 @@ export STOP_CAMPAIGN_ID=$(curl -s -k -X POST https://$TOWER_URL/api/v1/job_templ
   "playbook": "campaign.yaml",
   "extra_vars": "---\npromotion_rate: \"0\"\nremediation_action: \"https://'$TOWER_URL'/api/v2/job_templates/'$STOP_CAMPAIGN_ID'/launch/\"\ndt_application: \"carts\"\ndt_environment: \"production\""
 }' | jq -r '.id')
-#echo "STOP_CAMPAIGN_ID: " $STOP_CAMPAIGN_ID
+echo "STOP_CAMPAIGN_ID: " $STOP_CAMPAIGN_ID
 
 echo -e "Creating Job Template for starting the campaign..."
 export START_CAMPAIGN_ID=$(curl -s -k -X POST https://$TOWER_URL/api/v1/job_templates/ --user admin:dynatrace -H "Content-Type: application/json" \
