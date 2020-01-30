@@ -1,14 +1,8 @@
 {
-    "jenkinsUser": "admin",
-    "jenkinsPassword": "dynatrace123qweASD!",
     "docsOrg": "michaelsand87",
     "docsRepo": "Perform2020",
     "docsBranch": "master",
     "dynatraceTenant": "xkf13061.live.dynatrace.com",
     "dynatraceApiToken": "N5rJoYtAQDyI4ZyG9cLhG",
-    "dynatracePaasToken": "gx73WsieTxKJ1OK5-Acby",
-    "githubUserName": "michaelsand87",
-    "githubPersonalAccessToken": "a226a278d096645407169391ef94ae153a2ed186",
-    "githubUserEmail": "michael.sand@dynatrace.com",
-    "githubOrg": "Dynatrace"
+    "dynatracePaasToken": "gx73WsieTxKJ1OK5-Acby"
 }
