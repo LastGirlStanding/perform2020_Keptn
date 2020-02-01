@@ -1,6 +1,4 @@
 # Perform2020
-for Perform 2020
-
 
 ## Prerquisites
 Create a Paas and Api Token in your Dynatrace cluster and edit the creds.json accordingly, dont forget to alter the url to your tenant as well
