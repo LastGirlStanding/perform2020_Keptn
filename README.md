@@ -22,7 +22,8 @@ Make sure your kubectl config is properly set up to connect to your K8s cluster
     kubectl delete ns tower
     ```
     and run 3-installAnsible.sh again
-    The script will show you the name of the job template we want dynatrace to trigger so write that url down
+    The script will show you the name of the job template we want dynatrace to trigger so write that url down. This Url also contains the IP you need to access the Ansible tower in Step 6
+    
 4. Create tags in Dynatrace via Settings -> Tags -> Automatically applied tags
     Create a tag named "app" with the Rule 
     ```
