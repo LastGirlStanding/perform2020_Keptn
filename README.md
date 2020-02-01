@@ -8,8 +8,11 @@ Make sure your kubectl config is properly set up to connect to your K8s cluster
 
 ## Instructions
 
-1. Run 1-deployDynatraceOperator.sh to deploy the OneAgentOperator in your K8s cluster
-    kubectl get pods -n dynatrace to check if the agent and the operator run properly
+1. Run 1-deployDynatraceOperator.sh to deploy the OneAgentOperator in your K8s cluster. Check if everything is up and running:
+    ```
+    kubectl get pods -n dynatrace 
+    ```
+    
 2. Run 2-setupSockShop.sh to install the SockShop that we will use for our example
     kubectl get services -n production and wait for the public ip to be set and note it down
 3. Run 3-installAnsible.sh to install Ansible Tower it will also install some job templates that we need for our handson training.
