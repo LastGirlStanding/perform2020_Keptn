@@ -14,13 +14,26 @@ Make sure your kubectl config is properly set up to connect to your K8s cluster
     ```
     
 2. Run 2-setupSockShop.sh to install the SockShop that we will use for our example
-    kubectl get services -n production and wait for the public ip to be set and note it down
+    ```
+    kubectl get services -n production
+    ```
+    and wait for the public ip to be set and note it down
 3. Run 3-installAnsible.sh to install Ansible Tower it will also install some job templates that we need for our handson training.
-    If this script shows that some resources are missing execute kubectl delete ns tower and run 3-installAnsible.sh again
+    If this script shows that some resources are missing execute
+    ```
+    kubectl delete ns tower
+    ```
+    and run 3-installAnsible.sh again
     The script will show you the name of the job template we want dynatrace to trigger so write that url down
 4. Create tags in Dynatrace via Settings -> Tags -> Automatically applied tags
-    Create a tag named "app" with the Rule "Services get value '{ProcessGroup:KubernetesContainerName}' on process groups where Kubernetes container name exists"
-    Create a tag named "environment" with the Rule "Services get value '{ProcessGroup:KubernetesNamespace}' on process groups where Kubernetes namespace exists"
+    Create a tag named "app" with the Rule 
+    ```
+    Services get value '{ProcessGroup:KubernetesContainerName}' on process groups where Kubernetes container name exists
+    ```
+    Create a tag named "environment" with the Rule 
+    ```
+    Services get value '{ProcessGroup:KubernetesNamespace}' on process groups where Kubernetes namespace exists
+    ```
 5. Create a Problem notification in Dynatrace via Settings->Integrations-> Problem notifications -> Ansible
     Name: "Ansible Tower"
     template Url: insert the url of Step 4 here
