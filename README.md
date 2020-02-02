@@ -54,6 +54,7 @@ TODO: add instructions with images how to get the API and PaaS token from dynatr
         - Optional tag value: `{ProcessGroup:KubernetesContainerName}` 
         - Rule applies to: `process groups` 
         - Conditions: `Kubernetes container name` `exists`
+        - Add checkmark for **Apply to all services provided by the process groups** 
         
         ![tag app](./images/tag-app.png)
 
@@ -63,6 +64,7 @@ TODO: add instructions with images how to get the API and PaaS token from dynatr
         - Optional tag value: `{ProcessGroup:KubernetesNamespace}` 
         - Rule applies to: `process groups`
         - Conditions: `Kubernetes container name` `exists`
+        - Add checkmark for **Apply to all services provided by the process groups** 
 
         ![tag env](./images/tag-environment.png)
     
