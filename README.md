@@ -1,8 +1,8 @@
 # Perform2020
 
 ## Prerequisites
-Create a Paas and Api Token in your Dynatrace cluster and edit the creds.json accordingly, dont forget to alter the url to your tenant as well
-Make sure your kubectl config is properly set up to connect to your K8s cluster
+
+TODO: add instructions with images how to get the API and PaaS token from dynatrace
 
 ## Install tools and demo application
 
