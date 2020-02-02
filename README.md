@@ -1,4 +1,6 @@
-# Perform2020
+![perform](./images/perform_logo.png)
+
+# Auto-Remediation with Ansible Tower
 
 ## Prerequisites
 
