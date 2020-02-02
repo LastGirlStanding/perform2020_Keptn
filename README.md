@@ -1,43 +1,108 @@
 # Perform2020
 
-## Prerequisite
+## Prerequisites
 Create a Paas and Api Token in your Dynatrace cluster and edit the creds.json accordingly, dont forget to alter the url to your tenant as well
 Make sure your kubectl config is properly set up to connect to your K8s cluster
 
-## Instructions
+## Install tools and demo application
 
-1. Run 1-deployDynatraceOperator.sh to deploy the OneAgentOperator in your K8s cluster. Check if everything is up and running:
+1. Edit the creds.json file and provide your own credentials.
+
+    ```console
+    nano creds.json
+    ```
+    You can save by ctrl+x and exit with ctrl+x
+
+1. Deploy the Dynatrace OneAgent Operator with this script:
+
+    ```console
+    ./1-deployDynatraceOperator.sh
+    ```
+
+1. Check if everything is up and running:
     ```
     kubectl get pods -n dynatrace 
     ```
-    
-2. Run 2-setupSockShop.sh to install the SockShop that we will use for our example
+
+1. Deploy the demo application for our workshop with the provided script:
+    ```console
+    ./2-setupSockShop.sh 
     ```
+
+1. Fetch the public IP address for the carts service and copy to a temporary file - we will need it later.
+    ```console
     kubectl get services -n production
     ```
-    and wait for the public ip to be set and note it down
-3. Run 3-installAnsible.sh to install Ansible Tower it will also install some job templates that we need for our handson training.
-    If this script shows that some resources are missing execute
+
+1. Setup the Ansible Tower with a provided script. This will setup Ansible Tower and configure some job templates that we will need for this workshop. 
+    ```console
+    ./3-installAnsible.sh
+    ```
+    Please save the following Ansible Job URL to a temporary file.
+
+    In case you are running in any issues during this step, follow the troubleshooting guide at the end of this tutorial.
+
+1. Open the Ansible Tower by copying the **Tower URL** to a new browser tab. The login credentials are `admin / dynatrace`. 
+
+# Configure Dynatrace
+    
+1. Create tags in Dynatrace via **Settings -> Tags -> Automatically applied tags**
+
+    1. Create a tag named "**app**"
+        - Optional tag value: `{ProcessGroup:KubernetesContainerName}` 
+        - Rule applies to: `process groups` 
+        - Conditions: `Kubernetes container name` `exists`
+        
+        ![tag app](./images/tag-app.png)
+
+
+    1. Create a tag named "**environment**" 
+
+        - Optional tag value: `{ProcessGroup:KubernetesNamespace}` 
+        - Rule applies to: `process groups`
+        - Conditions: `Kubernetes container name` `exists`
+
+        ![tag env](./images/tag-environment.png)
+    
+
+1. Create a Problem notification in Dynatrace via **Settings->Integrations-> Problem notifications -> Ansible**
+    - Name: "Ansible Tower"
+    - Template Url: insert the url of Step 4 here
+    - Credentials: `admin / dynatrace`
+
+    ![problem notification](./images/problem-notification.png)
+
+
+# Let's try to mess with the service
+
+1. Start the load-generation script with this command. Please exchange the IP for the carts service you saved earlier in this tutorial.
+
+    ```console
+    ./add-to-carts.sh IP-OF-CARTS-SERVICE
+    ```
+
+1. Login to your Ansible Tower to start the prepared demo workflow. 
+
+1. Navigate to the **Resources -> Templates** section and start the provided template named **start-campain**
+
+    ![start-campaign](./images/start-campaign.png)
+
+1. Change the **promotion rate** to **30** and **LAUNCH** the job template.
+
+    ![launch](./images/launch.png)
+
+1. This will trigger a promotional campaign where 30 % of all user interactions of a shopping card _should_ receive a promotional item. Instead, what happens is that we will see an increase in the failure rate since the campaign has not been implemented yet. 
+
+1. Watch the self-healing take place ;)
+
+
+
+# Troubleshooting
+
+- In case Ansible Tower did not successfully install, please execute the following script to delete the failed installation and to try again:
     ```
     kubectl delete ns tower
     ```
-    and run 3-installAnsible.sh again
-    The script will show you the name of the job template we want dynatrace to trigger so write that url down. This Url also contains the IP you need to access the Ansible tower in Step 6
-    
-4. Create tags in Dynatrace via Settings -> Tags -> Automatically applied tags
-    Create a tag named "app" with the Rule 
     ```
-    Services get value '{ProcessGroup:KubernetesContainerName}' on process groups where Kubernetes container name exists
+    ./3-installAnsible.sh
     ```
-    Create a tag named "environment" with the Rule 
-    ```
-    Services get value '{ProcessGroup:KubernetesNamespace}' on process groups where Kubernetes namespace exists
-    ```
-5. Create a Problem notification in Dynatrace via Settings->Integrations-> Problem notifications -> Ansible
-    Name: "Ansible Tower"
-    template Url: insert the url of Step 4 here
-6. Login to your Ansible Tower Interface and Invoke the Campaign job template, be aware to set the 0 to a Number higher than 20 and launch the campaign
-    This will cause 20 % of the requests to fail
-7. Create the Requests using the add-to-cart.sh script like 
-    ./add-to-cart.sh %ip_of_your_sock_shop_from_step_2%
-8. Watch the self-healing take place ;)
