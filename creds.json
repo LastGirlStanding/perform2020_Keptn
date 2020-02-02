@@ -2,7 +2,7 @@
     "docsOrg": "michaelsand87",
     "docsRepo": "Perform2020",
     "docsBranch": "master",
-    "dynatraceTenant": "xkf13061.live.dynatrace.com",
-    "dynatraceApiToken": "N5rJoYtAQDyI4ZyG9cLhG",
-    "dynatracePaasToken": "gx73WsieTxKJ1OK5-Acby"
+    "dynatraceTenant": "",
+    "dynatraceApiToken": "",
+    "dynatracePaasToken": ""
 }
