@@ -3,7 +3,27 @@
 # Auto-Remediation with Ansible Tower
 
 ## Prerequisites
+1. Create a API Token
 
+1.1 Go to Settings -> Integration -> Dynatrace API and press the Generate Token Button
+![APIToken1.PNG](./images/APIToken1.PNG)
+
+1.2 Name the Token "Perform2020" and enable all switches and press the Generate Button
+![APIToken2.PNG](./images/APIToken2.PNG)
+
+1.3 After generating the Token click on the edit arrow on the right side of the row and copy the API token and note it down.
+![APIToken3.PNG](./images/APIToken3.PNG)
+
+2. Create a PaaS Token
+
+2.1 Go to Settings -> Integration -> Platform as a Service and press the Generate Token Button
+![PAASToken1.PNG](./images/PAASToken1.PNG)
+
+2.2 Name the Token "Perform2020" and press the Generate Button
+![PAASToken2.PNG](./images/PAASToken2.PNG)
+
+2.3 After generating the Token click on the edit arrow on the right side of the row and copy the API token and note it down.
+![PAASToken3.PNG](./images/PAASToken3.PNG)
 TODO: add instructions with images how to get the API and PaaS token from dynatrace
 
 ## Install tools and demo application
