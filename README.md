@@ -13,7 +13,7 @@ TODO: add instructions with images how to get the API and PaaS token from dynatr
     ```console
     nano creds.json
     ```
-    You can save by ctrl+x and exit with ctrl+x
+    You can save by ctrl+o and exit with ctrl+x
 
 1. Deploy the Dynatrace OneAgent Operator with this script:
 
