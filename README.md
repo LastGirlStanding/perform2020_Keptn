@@ -68,6 +68,8 @@
     kubectl get services -n production
     ```
 
+1. **STOP HERE FOR A MOMENT**
+
 1. Setup the Ansible Tower with a provided script. This will setup Ansible Tower and configure some job templates that we will need for this workshop. 
     ```console
     ./3-installAnsible.sh
