@@ -34,6 +34,11 @@
     docker run -d --name ${USER} -it --mount type=bind,source=/home/${USER}/.kube/,target=/root/.kube/ jetzlstorfer/hotday-gke:0.6.0 && docker exec -it ${USER} /bin/bash
     ```
 
+1. Go to the Ansible folder
+
+    ```console
+    cd ansible
+    ```
 
 1. Edit the creds.json file and provide your own credentials.
 
@@ -109,7 +114,7 @@
 1. Start the load-generation script with this command. Please exchange the IP for the carts service you saved earlier in this tutorial.
 
     ```console
-    ./add-to-carts.sh IP-OF-CARTS-SERVICE
+    ./add-to-cart.sh IP-OF-CARTS-SERVICE
     ```
 
 1. Login to your Ansible Tower to start the prepared demo workflow. 
