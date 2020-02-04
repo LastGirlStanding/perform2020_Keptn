@@ -24,7 +24,7 @@
 
 2.3 After generating the Token click on the edit arrow on the right side of the row and copy the API token and note it down.
 ![PAASToken3.PNG](./images/PAASToken3.PNG)
-TODO: add instructions with images how to get the API and PaaS token from dynatrace
+
 
 ## Install tools and demo application
 
