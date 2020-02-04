@@ -28,6 +28,13 @@ TODO: add instructions with images how to get the API and PaaS token from dynatr
 
 ## Install tools and demo application
 
+1. Login to the bastion host with your environment card
+
+    ```console
+    docker run -d --name ${USER} -it --mount type=bind,source=/home/${USER}/.kube/,target=/root/.kube/ jetzlstorfer/hotday-gke:0.6.0 && docker exec -it ${USER} /bin/bash
+    ```
+
+
 1. Edit the creds.json file and provide your own credentials.
 
     ```console
